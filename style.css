@@ -43,7 +43,18 @@
     font-size: 20px;
     margin-top: 10px;
 }
-
+.delete-btn-small{
+    width: 150px;
+    border-radius: 5px;
+    padding:10px 30px;
+    color:var(--white);
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    font-size: 20px;
+    margin-top: 10px;
+    background-color: var(--red);
+}
 .btn{
     background-color: var(--blue);
 }
@@ -57,6 +68,9 @@
 }
 
 .delete-btn:hover{
+    background-color: var(--dark-red);
+}
+.delete-btn-small:hover{
     background-color: var(--dark-red);
 }
 
@@ -128,7 +142,11 @@
     justify-content: center;
     padding:20px;
 }
-
+.boardgame-contanier{
+    flex-direction: column;
+    gap: 20px;
+    justify-content: normal;
+}
 .container .profile{
     padding:20px;
     background-color: var(--white);
@@ -256,4 +274,15 @@
     .update-profile form .flex .inputBox{
         width: 100%;
     }
+}
+.boardgame{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+.boardgame img{
+    width: 200px;
+    height: 200px;
 }
