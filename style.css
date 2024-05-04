@@ -32,6 +32,7 @@
 }
 
 .btn,
+.btn-medium,
 .delete-btn{
     width: 100%;
     border-radius: 5px;
@@ -55,11 +56,13 @@
     margin-top: 10px;
     background-color: var(--red);
 }
-.btn{
+.btn,
+.btn-medium{
     background-color: var(--blue);
 }
 
-.btn:hover{
+.btn:hover,
+.btn-medium:hover{
     background-color: var(--dark-blue);
 }
 
@@ -285,4 +288,8 @@
 .boardgame img{
     width: 200px;
     height: 200px;
+}
+.btn-medium{
+    width: 300px;
+    max-width: 80vw;
 }

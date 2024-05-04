@@ -26,7 +26,11 @@ $admin_status = isset($row['admin']) ? $row['admin'] : 0;
 <?php include 'navbar.php'; ?>
 
 <div class="container boardgame-contanier">
-
+    <?php
+    if($admin_status ==1){
+        echo "<a class=btn-medium btn-medium  href='create_boardgame.php'> Új Társasjáték </a>";
+    }
+    ?>
     <h2>Társas Játékok</h2>
     <?php
     $result = mysqli_query($conn, "SELECT id, name, image FROM boardgame");
