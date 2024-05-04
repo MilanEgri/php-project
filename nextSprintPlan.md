@@ -2,4 +2,8 @@
 - search bar
 - pegination
 - download pdf
-- 
+- responsive design
+- search bar
+- rename uploaded images
+- lot of manual testing
+- deploy
