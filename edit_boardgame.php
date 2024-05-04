@@ -87,6 +87,12 @@ if (isset($_GET['id'])) {
     <form action="" method="post" enctype="multipart/form-data">
         <h3>Társasjáték szerkeztése</h3>
         <?php
+
+        if ($boardgame_data['image'] == '') {
+            echo '<img src="images/default-avatar.png" class="img-circle>';
+        } else {
+            echo '<img src="uploaded_img/boardgames/' . $boardgame_data['image'] . '" class=boardgame-size-img>';
+        }
         if(isset($message)){
             foreach($message as $msg){
                 echo '<div class="message">'.$msg.'</div>';

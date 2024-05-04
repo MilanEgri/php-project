@@ -38,9 +38,9 @@ if(isset($_POST['delete_profile'])){
             $fetch = mysqli_fetch_assoc($select);
         }
         if($fetch['image'] == ''){
-            echo '<img src="images/default-avatar.png">';
+            echo '<img src="images/default-avatar.png" class="img-circle">';
         }else{
-            echo '<img src="uploaded_img/profile/'.$fetch['image'].'">';
+            echo '<img src="uploaded_img/profile/'.$fetch['image'].'" class="img-circle">';
         }
         ?>
         <h3><?php echo $fetch['name']; ?></h3>

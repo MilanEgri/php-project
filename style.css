@@ -159,7 +159,7 @@
     border-radius: 5px;
 }
 
-.container .profile img{
+.img-circle{
     height: 150px;
     width: 150px;
     border-radius: 50%;
@@ -204,14 +204,6 @@
     width: 700px;
     text-align: center;
     border-radius: 5px;
-}
-
-.update-profile form img{
-    height: 200px;
-    width: 200p;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 5px;
 }
 
 .update-profile form .flex{
@@ -306,4 +298,8 @@
 }
 input:disabled {
     opacity: 0.4;
+}
+.boardgame-size-img{
+    width: 180px;
+    height: 180px;
 }

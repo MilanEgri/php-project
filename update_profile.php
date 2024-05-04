@@ -90,9 +90,9 @@ if(isset($_POST['update_profile'])){
     <form action="" method="post" enctype="multipart/form-data">
         <?php
         if($fetch['image'] == ''){
-            echo '<img src="images/default-avatar.png">';
+            echo '<img src="images/default-avatar.png" class="img-circle">';
         }else{
-            echo '<img src="uploaded_img/profile/'.$fetch['image'].'">';
+            echo '<img src="uploaded_img/profile/'.$fetch['image'].'" class="img-circle">';
         }
         if(isset($message)){
             foreach($message as $message){
