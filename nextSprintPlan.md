@@ -1,0 +1,5 @@
+- meta tags
+- search bar
+- pegination
+- download pdf
+- 
