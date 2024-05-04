@@ -304,3 +304,6 @@
 .blue:hover{
     background-color: var(--dark-blue);
 }
+input:disabled {
+    opacity: 0.4;
+}

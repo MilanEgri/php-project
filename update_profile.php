@@ -13,18 +13,25 @@ $user_id = $_SESSION['user_id'];
 
 if(isset($_POST['update_profile'])){
 
-    $update_name = mysqli_real_escape_string($conn, $_POST['update_name']);
-    $update_email = mysqli_real_escape_string($conn, $_POST['update_email']);
-
-    mysqli_query($conn, "UPDATE `user_form` SET name = '$update_name', email = '$update_email' WHERE id = '$user_id'") or die('query failed');
-
     $old_pass = $_POST['old_pass'];
-    $update_pass = mysqli_real_escape_string($conn, md5($_POST['update_pass']));
-    $new_pass = mysqli_real_escape_string($conn, md5($_POST['new_pass']));
-    $confirm_pass = mysqli_real_escape_string($conn, md5($_POST['confirm_pass']));
+    $update_pass= mysqli_real_escape_string($conn, md5($_POST['update_pass']));
 
-    if(!empty($update_pass) || !empty($new_pass) || !empty($confirm_pass)){
+    if(!empty($_POST['new_pass'])){
+    $new_pass = mysqli_real_escape_string($conn, md5($_POST['new_pass']));
+    }else{
+        $new_pass = null;
+    }
+    if(!empty($_POST['confirm_pass'])){
+
+    $confirm_pass= mysqli_real_escape_string($conn, md5($_POST['confirm_pass']));
+    }else{
+        $confirm_pass= null;
+    }
+
+    if(!empty($new_pass) || !empty($confirm_pass)){
         if($update_pass != $old_pass){
+            echo "<script>console.log('$new_pass');</script>";
+            echo "<script>console.log('$confirm_pass');</script>";
             $message[] = 'Jelenlegi jelszó hibás!';
         }elseif($new_pass != $confirm_pass){
             $message[] = 'Jeleszók nem egyeznek!';
@@ -37,7 +44,7 @@ if(isset($_POST['update_profile'])){
     $update_image = $_FILES['update_image']['name'];
     $update_image_size = $_FILES['update_image']['size'];
     $update_image_tmp_name = $_FILES['update_image']['tmp_name'];
-    $update_image_folder = 'uploaded_img/'.$update_image;
+    $update_image_folder = 'uploaded_img/profile/'.$update_image;
 
     if(!empty($update_image)){
         if($update_image_size > 2000000){
@@ -94,9 +101,9 @@ if(isset($_POST['update_profile'])){
         <div class="flex">
             <div class="inputBox">
                 <span>Felhasználónév :</span>
-                <input type="text" name="update_name" value="<?php echo $fetch['name']; ?>" class="box">
+                <input type="text" name="update_name" value="<?php echo $fetch['name']; ?>" class="box" disabled>
                 <span>email cím:</span>
-                <input type="email" name="update_email" value="<?php echo $fetch['email']; ?>" class="box">
+                <input type="email" name="update_email" value="<?php echo $fetch['email']; ?>" class="box" disabled>
                 <span>profil kép frissítése :</span>
                 <input type="file" name="update_image" accept="image/jpg, image/jpeg, image/png" class="box">
             </div>
