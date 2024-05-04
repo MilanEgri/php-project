@@ -286,10 +286,21 @@
     justify-content: center;
 }
 .boardgame img{
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
 }
 .btn-medium{
     width: 300px;
     max-width: 80vw;
+}
+.boardgame-btns{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+.blue{
+    background-color: var(--blue);
+}
+.blue:hover{
+    background-color: var(--dark-blue);
 }
