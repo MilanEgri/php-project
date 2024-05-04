@@ -71,7 +71,9 @@ if(isset($_POST['submit'])){
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Regisztráció</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        <?php include 'style.css'; ?>
+    </style>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 </head>

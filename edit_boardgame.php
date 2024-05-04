@@ -75,15 +75,17 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Board Game</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Társasjáték Szerkeztése</title>
+    <style>
+        <?php include 'style.css'; ?>
+    </style>
 </head>
 <body>
 <?php include 'navbar.php'; ?>
 
 <div class="form-container">
     <form action="" method="post" enctype="multipart/form-data">
-        <h3>Edit Board Game</h3>
+        <h3>Társasjáték szerkeztése</h3>
         <?php
         if(isset($message)){
             foreach($message as $msg){
@@ -97,7 +99,7 @@ if (isset($_GET['id'])) {
         <input type="text" name="maxplayer" placeholder="Maximum Players" value="<?php echo $boardgame_data['maxplayer']; ?>" required class="box">
         <input type="text" name="playtime" placeholder="Playtime" value="<?php echo $boardgame_data['playtime']; ?>" required class="box">
         <input type="file" name="image" accept="image/jpeg, image/png" class="box">
-        <input type="submit" name="submit" value="Update Board Game" class="btn">
+        <input type="submit" name="submit" value="Társasjáték Szerkeztése" class="btn">
     </form>
 </div>
 </body>
