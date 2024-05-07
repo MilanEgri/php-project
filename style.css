@@ -45,7 +45,6 @@
     margin-top: 10px;
 }
 .delete-btn-small{
-    width: 150px;
     border-radius: 5px;
     padding:10px 30px;
     color:var(--white);
@@ -302,4 +301,11 @@ input:disabled {
 .boardgame-size-img{
     width: 180px;
     height: 180px;
+}
+.boardgame a{
+    margin-bottom: 10px;
+    font-size: 30px;
+    color: var(--black);
+    text-transform: uppercase;
+}
 }

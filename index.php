@@ -44,7 +44,7 @@ $admin_status = isset($row['admin']) ? $row['admin'] : 0;
             } else {
                 echo "<img src='uploaded_img/boardgames/{$row['image']}' alt='{$row['name']}' class='boardgame-image'>";
             }
-            echo "<h3>{$row['name']}</h3>";
+            echo "<a href='boardgame.php?id={$row['id']}'>{$row['name']}</a>";
             if ($admin_status == 1) {
                 echo "<div class='boardgame-btns'>";
                 echo "<a class=delete-btn-small href='delete.php?id={$row['id']}'> Törlés </a>";
