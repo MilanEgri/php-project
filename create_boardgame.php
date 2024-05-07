@@ -63,7 +63,7 @@ if(isset($_POST['submit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Board Game</title>
+    <title>Társasjáték létrehozása</title>
     <style>
         <?php include 'style.css'; ?>
     </style>
@@ -73,7 +73,7 @@ if(isset($_POST['submit'])) {
 
 <div class="form-container">
     <form action="" method="post" enctype="multipart/form-data">
-        <h3>Create New Board Game</h3>
+        <h3>Társasjáték feltöltése</h3>
         <?php
         if(isset($message)){
             foreach($message as $msg){
@@ -81,11 +81,11 @@ if(isset($_POST['submit'])) {
             }
         }
         ?>
-        <input type="text" name="name" placeholder="Name" required class="box">
-        <textarea name="description" placeholder="Description" rows="4" required class="box"></textarea>
-        <input type="number" name="minplayer" placeholder="Minimum Players" required class="box">
-        <input type="number" name="maxplayer" placeholder="Maximum Players" required class="box">
-        <input type="text" name="playtime" placeholder="Playtime" required class="box">
+        <input type="text" name="name" placeholder="Név" required class="box">
+        <textarea name="description" placeholder="Leírás" rows="4" required class="box"></textarea>
+        <input type="number" name="minplayer" placeholder="Minimum Játékos" required class="box">
+        <input type="number" name="maxplayer" placeholder="Maximum Játékos" required class="box">
+        <input type="text" name="playtime" placeholder="Játékidő" required class="box">
         <input type="file" name="image" accept="image/jpeg, image/png" required class="box">
         <input type="submit" name="submit" value="Add Board Game" class="btn">
     </form>

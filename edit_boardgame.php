@@ -89,7 +89,7 @@ if (isset($_GET['id'])) {
         <?php
 
         if ($boardgame_data['image'] == '') {
-            echo '<img src="images/default-avatar.png" class="img-circle>';
+            echo '<img src="images/nobg.png" class=boardgame-size-img>';
         } else {
             echo '<img src="uploaded_img/boardgames/' . $boardgame_data['image'] . '" class=boardgame-size-img>';
         }

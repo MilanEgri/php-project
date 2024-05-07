@@ -29,7 +29,7 @@ $admin_status = isset($row['admin']) ? $row['admin'] : 0;
 
 <div class="container boardgame-contanier">
     <?php
-    if($admin_status ==1){
+    if ($admin_status == 1) {
         echo "<a class=btn-medium btn-medium  href='create_boardgame.php'> Új Társasjáték </a>";
     }
     ?>
@@ -39,9 +39,13 @@ $admin_status = isset($row['admin']) ? $row['admin'] : 0;
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
             echo "<div class='boardgame'>";
-            echo "<img src='uploaded_img/boardgames/{$row['image']}' alt='{$row['name']}' class='boardgame-image'>";
+            if ($row['image'] == "") {
+                echo '<img src=images/nobg.png class="boardgame-image">';
+            } else {
+                echo "<img src='uploaded_img/boardgames/{$row['image']}' alt='{$row['name']}' class='boardgame-image'>";
+            }
             echo "<h3>{$row['name']}</h3>";
-            if($admin_status ==1){
+            if ($admin_status == 1) {
                 echo "<div class='boardgame-btns'>";
                 echo "<a class=delete-btn-small href='delete.php?id={$row['id']}'> Törlés </a>";
                 echo "<a class='delete-btn-small blue' href='edit_boardgame.php?id={$row['id']}'> Szerkeztés </a>";
