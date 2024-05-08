@@ -7,3 +7,4 @@
 - rename uploaded images
 - lot of manual testing
 - deploy
+- grammar check en/hu

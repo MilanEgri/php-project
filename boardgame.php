@@ -8,22 +8,42 @@ $message = array();
 if (isset($_GET['id'])) {
     $boardgame_id = $_GET['id'];
 
-    // Lekérdezzük a társasjáték adatait
+    if (isset($_SESSION['user_id'])) {
+        $user_id = $_SESSION['user_id'];
+    }
+
     $select_query = mysqli_query($conn, "SELECT * FROM boardgame WHERE id = '$boardgame_id'");
     if (mysqli_num_rows($select_query) > 0) {
         $boardgame_data = mysqli_fetch_assoc($select_query);
     } else {
-        $message[] = "Társasjáték nem található";
+        $message[] = "A társasjáték nem található.";
     }
 
-    // Lekérdezzük a hozzászólásokat
     $comments_query = mysqli_query($conn, "SELECT comment.*, user_form.name AS author_name FROM comment JOIN user_form ON comment.User_ID = user_form.ID WHERE comment.boardgame_id = '$boardgame_id'");
     $comments = array();
     while ($row = mysqli_fetch_assoc($comments_query)) {
-        $comments[] = $row; // A teljes hozzászólás tömböt adjuk hozzá, nem csak a szöveget
+        $comments[] = $row;
     }
 } else {
-    $message[] = "Nincs megadott társasjáték ID";
+    $message[] = "Nincs megadott társasjáték azonosító.";
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!isset($_SESSION['user_id'])) {
+        header("location: login.php");
+        exit;
+    }
+
+    $user_id = $_SESSION['user_id'];
+    $boardgame_id = $_POST['boardgame_id'];
+    $comment_text = mysqli_real_escape_string($conn, $_POST['comment_text']);
+
+    $insert_query = mysqli_query($conn, "INSERT INTO comment (User_ID, Boardgame_ID, Comment_Text) VALUES ('$user_id', '$boardgame_id', '$comment_text')");
+    if ($insert_query) {
+        $message[] = "Sikeres hozzászólás!";
+    } else {
+        $message[] = "Hiba történt a hozzászólás beküldése közben: " . mysqli_error($conn);
+    }
 }
 ?>
 
@@ -32,35 +52,32 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $boardgame_data['name']; ?></title>
+    <title><?php echo isset($boardgame_data['name']) ? $boardgame_data['name'] : 'Társasjáték'; ?></title>
     <style>
         <?php include 'style.css'; ?>
     </style>
 </head>
 <body>
 <?php include 'navbar.php'; ?>
-
+<script>
+    <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
+    window.location.replace(window.location.href);
+    <?php endif; ?>
+</script>
 <div class="form-container">
-    <form action="" method="post" enctype="multipart/form-data">
-        <h3><?php echo $boardgame_data['name']; ?></h3>
-        <?php
-        if ($boardgame_data['image'] == '') {
-            echo '<img src="images/nobg.png" class="img-circle">';
-        } else {
-            echo '<img src="uploaded_img/boardgames/' . $boardgame_data['image'] . '" class=boardgame-size-img>';
-        }
-        if (isset($message)) {
-            foreach ($message as $msg) {
-                echo '<div class="message">' . $msg . '</div>';
-            }
-        }
-        ?>
-        <p><?php echo $boardgame_data['description']; ?></p>
-        <p><?php echo $boardgame_data['minplayer'] . " - " . $boardgame_data['maxplayer'] . " Játékos"; ?></p>
-        <p><?php echo $boardgame_data['playtime'] . " játékidő"; ?></p>
+    <div class="bg-main">
+        <h3><?php echo isset($boardgame_data['name']) ? $boardgame_data['name'] : 'Név nincs megadva'; ?></h3>
+        <?php if (!empty($boardgame_data['image'])): ?>
+            <img src="uploaded_img/boardgames/<?php echo $boardgame_data['image']; ?>" class="boardgame-size-img">
+        <?php endif; ?>
+        <?php foreach ($message as $msg): ?>
+            <div class="message"><?php echo $msg; ?></div>
+        <?php endforeach; ?>
+        <p><?php echo isset($boardgame_data['description']) ? $boardgame_data['description'] : 'Nincs leírás megadva.'; ?></p>
+        <p><?php echo isset($boardgame_data['minplayer']) && isset($boardgame_data['maxplayer']) ? $boardgame_data['minplayer'] . " - " . $boardgame_data['maxplayer'] . " Játékos" : 'Nincs megadva játékos létszám.'; ?></p>
+        <p><?php echo isset($boardgame_data['playtime']) ? $boardgame_data['playtime'] . " játékidő" : 'Nincs megadva játékidő.'; ?></p>
 
         <div class="comment-section">
-            <h4>Commentek:</h4>
             <ul>
                 <?php foreach ($comments as $comment): ?>
                     <li class="comment">
@@ -75,8 +92,17 @@ if (isset($_GET['id'])) {
                     </li>
                 <?php endforeach; ?>
             </ul>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <div class="comment-post-contanier">
+                    <form class="comment-post-form" action="" method="post" enctype="multipart/form-data">
+                        <input class="comment-input" type="text" name="comment_text" placeholder="Írj egy hozzászólást...">
+                        <input type="hidden" name="boardgame_id" value="<?php echo isset($boardgame_id) ? $boardgame_id : ''; ?>">
+                        <button class="btn" type="submit">Hozzászólás</button>
+                    </form>
+                </div>
+            <?php endif; ?>
         </div>
-    </form>
+    </div>
 </div>
 </body>
 </html>
