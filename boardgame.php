@@ -74,8 +74,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="message"><?php echo $msg; ?></div>
         <?php endforeach; ?>
         <p><?php echo isset($boardgame_data['description']) ? $boardgame_data['description'] : 'Nincs leírás megadva.'; ?></p>
-        <p><?php echo isset($boardgame_data['minplayer']) && isset($boardgame_data['maxplayer']) ? $boardgame_data['minplayer'] . " - " . $boardgame_data['maxplayer'] . " Játékos" : 'Nincs megadva játékos létszám.'; ?></p>
-        <p><?php echo isset($boardgame_data['playtime']) ? $boardgame_data['playtime'] . " játékidő" : 'Nincs megadva játékidő.'; ?></p>
+        <div class="bg-data-small">
+            <p><?php echo isset($boardgame_data['minplayer']) && isset($boardgame_data['maxplayer']) ? $boardgame_data['minplayer'] . " - " . $boardgame_data['maxplayer'] . " Játékos" : 'Nincs megadva játékos létszám.'; ?></p>
+            <p><?php echo isset($boardgame_data['playtime']) ? $boardgame_data['playtime'] . " játékidő" : 'Nincs megadva játékidő.'; ?></p>
+        </div>
 
         <div class="comment-section">
             <ul>
@@ -85,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <span class="comment-author"><?php echo $comment['author_name']; ?></span>
                             <span class="comment-date">Dátum: <?php echo $comment['Created_at']; ?></span>
                         </div>
-                        <p><?php echo $comment['Comment_Text']; ?></p>
+                        <span class="comment-text"><?php echo $comment['Comment_Text']; ?></span>
                         <?php if ($comment['Edited']): ?>
                             <span class="comment-author">(Szerkesztve)</span>
                         <?php endif; ?>
@@ -95,8 +97,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php if (isset($_SESSION['user_id'])): ?>
                 <div class="comment-post-contanier">
                     <form class="comment-post-form" action="" method="post" enctype="multipart/form-data">
-                        <input class="comment-input" type="text" name="comment_text" placeholder="Írj egy hozzászólást...">
-                        <input type="hidden" name="boardgame_id" value="<?php echo isset($boardgame_id) ? $boardgame_id : ''; ?>">
+                        <input class="comment-input" type="text" name="comment_text"
+                               placeholder="Írj egy hozzászólást...">
+                        <input type="hidden" name="boardgame_id"
+                               value="<?php echo isset($boardgame_id) ? $boardgame_id : ''; ?>">
                         <button class="btn" type="submit">Hozzászólás</button>
                     </form>
                 </div>

@@ -8,3 +8,6 @@
 - lot of manual testing
 - deploy
 - grammar check en/hu
+- delete and edit own comment
+- admin delete all comment
+- show profile pic next to comment
