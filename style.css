@@ -308,4 +308,36 @@ input:disabled {
     color: var(--black);
     text-transform: uppercase;
 }
+.comment-section {
+    margin-top: 20px;
 }
+
+.comment {
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.comment p {
+    margin: 0;
+}
+
+.comment-author {
+    font-weight: bold;
+    color: #333;
+}
+
+.comment-date {
+    color: #666;
+    font-size: 12px;
+}
+.comment-line{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+}
+ ul {
+    list-style-type: none;
+}
+
