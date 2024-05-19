@@ -1,13 +1,13 @@
 - meta tags
 - search bar
 - pegination
-- download pdf
+- download pdf ✅
 - responsive design
 - search bar
 - rename uploaded images ✅
 - lot of manual testing
 - deploy
 - grammar check en/hu
-- delete and edit own comment
+- delete own comment
 - admin delete all comment
 - show profile pic next to comment

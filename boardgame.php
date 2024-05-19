@@ -56,6 +56,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <style>
         <?php include 'style.css'; ?>
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        window.jsPDF = window.jspdf.jsPDF;
+
+        function downloadPDF() {
+            const content = document.getElementById('boardgame-content');
+            const doc = new jsPDF();
+
+            html2canvas(content, {
+                scale: 2, // Increase the scale to improve the quality
+            }).then((canvas) => {
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = 190; // Width in mm
+                const pageHeight = 285; // Height in mm (A4 paper)
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+                let heightLeft = imgHeight;
+                let position = 0;
+
+                doc.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    doc.addPage();
+                    doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+
+                doc.save('<?php echo isset($boardgame_data['name']) ? $boardgame_data['name'] : 'Boardgame'; ?>.pdf');
+            });
+        }
+    </script>
 </head>
 <body>
 <?php include 'navbar.php'; ?>
@@ -65,19 +98,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php endif; ?>
 </script>
 <div class="form-container">
-    <div class="bg-main">
-        <h3><?php echo isset($boardgame_data['name']) ? $boardgame_data['name'] : 'Név nincs megadva'; ?></h3>
-        <?php if (!empty($boardgame_data['image'])): ?>
-            <img src="uploaded_img/boardgames/<?php echo $boardgame_data['image']; ?>" class="boardgame-size-img">
-        <?php endif; ?>
-        <?php foreach ($message as $msg): ?>
-            <div class="message"><?php echo $msg; ?></div>
-        <?php endforeach; ?>
-        <p><?php echo isset($boardgame_data['description']) ? $boardgame_data['description'] : 'Nincs leírás megadva.'; ?></p>
-        <div class="bg-data-small">
-            <p><?php echo isset($boardgame_data['minplayer']) && isset($boardgame_data['maxplayer']) ? $boardgame_data['minplayer'] . " - " . $boardgame_data['maxplayer'] . " Játékos" : 'Nincs megadva játékos létszám.'; ?></p>
-            <p><?php echo isset($boardgame_data['playtime']) ? $boardgame_data['playtime'] . " játékidő" : 'Nincs megadva játékidő.'; ?></p>
+    <div class="bg-main" >
+        <div id="boardgame-content">
+            <h3><?php echo isset($boardgame_data['name']) ? $boardgame_data['name'] : 'Név nincs megadva'; ?></h3>
+            <?php if (!empty($boardgame_data['image'])): ?>
+                <img src="uploaded_img/boardgames/<?php echo $boardgame_data['image']; ?>" class="boardgame-size-img">
+            <?php endif; ?>
+            <?php foreach ($message as $msg): ?>
+                <div class="message"><?php echo $msg; ?></div>
+            <?php endforeach; ?>
+            <p><?php echo isset($boardgame_data['description']) ? $boardgame_data['description'] : 'Nincs leírás megadva.'; ?></p>
+            <div class="bg-data-small">
+                <p><?php echo isset($boardgame_data['minplayer']) && isset($boardgame_data['maxplayer']) ? $boardgame_data['minplayer'] . " - " . $boardgame_data['maxplayer'] . " Játékos" : 'Nincs megadva játékos létszám.'; ?></p>
+                <p><?php echo isset($boardgame_data['playtime']) ? $boardgame_data['playtime'] . " játékidő" : 'Nincs megadva játékidő.'; ?></p>
+            </div>
         </div>
+        <button class="btn" onclick="downloadPDF()">Download as PDF</button>
 
         <div class="comment-section">
             <ul>
@@ -108,5 +144,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 </div>
+
 </body>
 </html>
