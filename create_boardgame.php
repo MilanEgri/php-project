@@ -13,9 +13,10 @@ $select_admin = mysqli_query($conn, "SELECT admin FROM `user_form` WHERE id = '$
 $row = mysqli_fetch_assoc($select_admin);
 $admin_status = $row['admin'];
 
-if ( $admin_status != 1) {
+if ($admin_status != 1) {
     header("location: index.php");
-    exit;}
+    exit;
+}
 
 $message = array();
 
@@ -28,7 +29,6 @@ if(isset($_POST['submit'])) {
     $image = $_FILES['image']['name'];
     $image_size = $_FILES['image']['size'];
     $image_tmp_name = $_FILES['image']['tmp_name'];
-    $image_folder = 'uploaded_img/boardgames/' . $image;
 
     $select = mysqli_query($conn, "SELECT * FROM `boardgame` WHERE name = '$name'") or die('query failed');
     if(mysqli_num_rows($select) > 0){
@@ -38,24 +38,27 @@ if(isset($_POST['submit'])) {
         if($image_size > $max_image_size){
             $message[] = 'A képméret túl nagy (maximum 2MB)!';
         } else {
-            if ( $admin_status = 1) {
-            $insert_query = "INSERT INTO boardgame (name, description, minplayer, maxplayer, playtime, image) VALUES ('$name', '$description', '$minplayer', '$maxplayer', '$playtime', '$image')";
-            $result = mysqli_query($conn, $insert_query);
+            $image_extension = pathinfo($image, PATHINFO_EXTENSION);
+            $unique_image_name = time() . '_' . uniqid() . '.' . $image_extension;
+            $image_folder = 'uploaded_img/boardgames/' . $unique_image_name;
 
-            }else{
-                header("location: index.php");
-                exit;}
+            if ($admin_status == 1) {
+                $insert_query = "INSERT INTO boardgame (name, description, minplayer, maxplayer, playtime, image) VALUES ('$name', '$description', '$minplayer', '$maxplayer', '$playtime', '$unique_image_name')";
+                $result = mysqli_query($conn, $insert_query);
 
-            if($result) {
-                move_uploaded_file($image_tmp_name, $image_folder);
-                $message[] = "A társasjáték sikeresen hozzá lett adva!";
+                if($result) {
+                    move_uploaded_file($image_tmp_name, $image_folder);
+                    $message[] = "A társasjáték sikeresen hozzá lett adva!";
+                } else {
+                    $message[] = "Hiba történt a társasjáték hozzáadása közben: " . mysqli_error($conn);
+                }
             } else {
-                $message[] = "Hiba történt a társasjáték hozzáadása közben: " . mysqli_error($conn);
+                header("location: index.php");
+                exit;
             }
         }
     }
 }
-
 ?>
 
 <!DOCTYPE html>

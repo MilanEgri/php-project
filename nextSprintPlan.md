@@ -4,7 +4,7 @@
 - download pdf
 - responsive design
 - search bar
-- rename uploaded images
+- rename uploaded images ✅
 - lot of manual testing
 - deploy
 - grammar check en/hu

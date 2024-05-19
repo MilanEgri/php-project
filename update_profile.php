@@ -6,8 +6,6 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-
-
 include 'config.php';
 $user_id = $_SESSION['user_id'];
 
@@ -17,21 +15,18 @@ if(isset($_POST['update_profile'])){
     $update_pass= mysqli_real_escape_string($conn, md5($_POST['update_pass']));
 
     if(!empty($_POST['new_pass'])){
-    $new_pass = mysqli_real_escape_string($conn, md5($_POST['new_pass']));
+        $new_pass = mysqli_real_escape_string($conn, md5($_POST['new_pass']));
     }else{
         $new_pass = null;
     }
     if(!empty($_POST['confirm_pass'])){
-
-    $confirm_pass= mysqli_real_escape_string($conn, md5($_POST['confirm_pass']));
+        $confirm_pass= mysqli_real_escape_string($conn, md5($_POST['confirm_pass']));
     }else{
         $confirm_pass= null;
     }
 
     if(!empty($new_pass) || !empty($confirm_pass)){
         if($update_pass != $old_pass){
-            echo "<script>console.log('$new_pass');</script>";
-            echo "<script>console.log('$confirm_pass');</script>";
             $message[] = 'Jelenlegi jelszó hibás!';
         }elseif($new_pass != $confirm_pass){
             $message[] = 'Jeleszók nem egyeznek!';
@@ -44,17 +39,20 @@ if(isset($_POST['update_profile'])){
     $update_image = $_FILES['update_image']['name'];
     $update_image_size = $_FILES['update_image']['size'];
     $update_image_tmp_name = $_FILES['update_image']['tmp_name'];
-    $update_image_folder = 'uploaded_img/profile/'.$update_image;
 
     if(!empty($update_image)){
         if($update_image_size > 2000000){
             $message[] = 'Képméret túl nagy';
         }else{
-            $image_update_query = mysqli_query($conn, "UPDATE `user_form` SET image = '$update_image' WHERE id = '$user_id'") or die('query failed');
+            $image_extension = pathinfo($update_image, PATHINFO_EXTENSION);
+            $unique_image_name = time() . '_' . uniqid() . '.' . $image_extension;
+            $update_image_folder = 'uploaded_img/profile/'.$unique_image_name;
+
+            $image_update_query = mysqli_query($conn, "UPDATE `user_form` SET image = '$unique_image_name' WHERE id = '$user_id'") or die('query failed');
             if($image_update_query){
                 move_uploaded_file($update_image_tmp_name, $update_image_folder);
+                $message[] = 'Kép sikeresen feltöltve!';
             }
-            $message[] = 'Kép sikeresen feltöltve!';
         }
     }
 
@@ -63,7 +61,7 @@ if(isset($_POST['update_profile'])){
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

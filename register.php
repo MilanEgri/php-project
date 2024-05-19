@@ -35,6 +35,10 @@ if(isset($_POST['submit'])){
         $image_tmp_name = $_FILES['image']['tmp_name'];
         $image_folder = 'uploaded_img/profile/'.$image;
 
+        $image_extension = pathinfo($image, PATHINFO_EXTENSION);
+        $unique_image_name = time() . '_' . uniqid() . '.' . $image_extension;
+        $image_folder = 'uploaded_img/profile/'.$unique_image_name;
+
         $select = mysqli_query($conn, "SELECT * FROM `user_form` WHERE email = '$email'") or die('query failed');
 
         if(mysqli_num_rows($select) > 0){

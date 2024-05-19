@@ -30,7 +30,6 @@ if(isset($_POST['submit'])) {
     $image = $_FILES['image']['name'];
     $image_size = $_FILES['image']['size'];
     $image_tmp_name = $_FILES['image']['tmp_name'];
-    $image_folder = 'uploaded_img/boardgames/' . $image;
 
     $max_image_size = 2 * 1024 * 1024; // 2MB
     if ($image_size > $max_image_size) {
@@ -39,7 +38,11 @@ if(isset($_POST['submit'])) {
         $update_query = "UPDATE boardgame SET name = '$name', description = '$description', minplayer = '$minplayer', maxplayer = '$maxplayer', playtime = '$playtime'";
 
         if (!empty($image)) {
-            $update_query .= ", image = '$image'";
+            $image_extension = pathinfo($image, PATHINFO_EXTENSION);
+            $unique_image_name = time() . '_' . uniqid() . '.' . $image_extension;
+            $image_folder = 'uploaded_img/boardgames/' . $unique_image_name;
+
+            $update_query .= ", image = '$unique_image_name'";
         }
 
         $update_query .= " WHERE id = '$boardgame_id'";
@@ -52,7 +55,7 @@ if(isset($_POST['submit'])) {
             }
             $message[] = "Társasjáték sikeresen frissítve";
         } else {
-            $message[] = "Valmi hiba történt: " . mysqli_error($conn);
+            $message[] = "Valami hiba történt: " . mysqli_error($conn);
         }
     }
 }
@@ -75,7 +78,7 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Társasjáték Szerkeztése</title>
+    <title>Társasjáték Szerkesztése</title>
     <style>
         <?php include 'style.css'; ?>
     </style>
@@ -85,13 +88,13 @@ if (isset($_GET['id'])) {
 
 <div class="form-container">
     <form action="" method="post" enctype="multipart/form-data">
-        <h3>Társasjáték szerkeztése</h3>
+        <h3>Társasjáték szerkesztése</h3>
         <?php
 
         if ($boardgame_data['image'] == '') {
-            echo '<img src="images/nobg.png" class=boardgame-size-img>';
+            echo '<img src="images/nobg.png" class="boardgame-size-img">';
         } else {
-            echo '<img src="uploaded_img/boardgames/' . $boardgame_data['image'] . '" class=boardgame-size-img>';
+            echo '<img src="uploaded_img/boardgames/' . $boardgame_data['image'] . '" class="boardgame-size-img">';
         }
         if(isset($message)){
             foreach($message as $msg){
@@ -105,7 +108,7 @@ if (isset($_GET['id'])) {
         <input type="text" name="maxplayer" placeholder="Maximum Players" value="<?php echo $boardgame_data['maxplayer']; ?>" required class="box">
         <input type="text" name="playtime" placeholder="Playtime" value="<?php echo $boardgame_data['playtime']; ?>" required class="box">
         <input type="file" name="image" accept="image/jpeg, image/png" class="box">
-        <input type="submit" name="submit" value="Társasjáték Szerkeztése" class="btn">
+        <input type="submit" name="submit" value="Társasjáték Szerkesztése" class="btn">
     </form>
 </div>
 </body>
