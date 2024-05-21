@@ -1,9 +1,8 @@
 - meta tags
-- search bar
 - pegination
 - download pdf ✅
 - responsive design
-- search bar
+- search bar ✅
 - rename uploaded images ✅
 - lot of manual testing
 - deploy
