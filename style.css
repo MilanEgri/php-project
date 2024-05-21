@@ -415,4 +415,16 @@ ul {
 #boardgame-content img{
     margin-bottom: 20px;
 }
+.search-container{
+    display: flex;
+    justify-content: center;
+    padding: .5rem;
+    background-color: var(--light-bg);
+}
+.searchInput{
+    padding: 1rem;
+    border-radius: 12px;
+    width: 300px;
+    max-width: 90vw;
+}
 
