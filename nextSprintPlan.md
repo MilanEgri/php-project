@@ -1,5 +1,5 @@
 - meta tags
-- pegination
+- pegination ✅
 - download pdf ✅
 - responsive design
 - search bar ✅
