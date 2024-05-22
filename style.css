@@ -285,7 +285,8 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 20px;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 1rem;
 }
 
 .boardgame img {

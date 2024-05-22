@@ -79,3 +79,5 @@ config.php
 update_images/**/*.*
 !update_images/
 !update_images/**/
+.DS_Store
+.idea

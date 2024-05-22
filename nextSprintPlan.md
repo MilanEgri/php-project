@@ -1,7 +1,7 @@
 - meta tags
 - pegination ✅
 - download pdf ✅
-- responsive design
+- responsive design ✅
 - search bar ✅
 - rename uploaded images ✅
 - lot of manual testing
