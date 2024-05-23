@@ -360,6 +360,7 @@ input:disabled {
     display: flex;
     justify-content: space-between;
     padding: 0 1rem;
+    gap: .5rem;
 }
 
 ul {
@@ -452,5 +453,11 @@ pagination {
     background-color: #007bff;
     color: white;
     border: 1px solid #007bff;
+}
+.form-container .delete-comment-form {
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
+    text-align: center;
 }
 

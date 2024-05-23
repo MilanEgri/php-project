@@ -8,8 +8,10 @@ $message = array();
 if (isset($_GET['id'])) {
     $boardgame_id = $_GET['id'];
 
+
     if (isset($_SESSION['user_id'])) {
         $user_id = $_SESSION['user_id'];
+
     }
 
     $select_query = mysqli_query($conn, "SELECT * FROM boardgame WHERE id = '$boardgame_id'");
@@ -29,20 +31,39 @@ if (isset($_GET['id'])) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (!isset($_SESSION['user_id'])) {
-        header("location: login.php");
-        exit;
-    }
+    if (isset($_POST['delete_comment'])) {
+        $comment_id = $_POST['comment_id'];
 
-    $user_id = $_SESSION['user_id'];
-    $boardgame_id = $_POST['boardgame_id'];
-    $comment_text = mysqli_real_escape_string($conn, $_POST['comment_text']);
+        $check_query = mysqli_query($conn, "SELECT * FROM comment WHERE ID = '$comment_id'");
+        $comment_data = mysqli_fetch_assoc($check_query);
 
-    $insert_query = mysqli_query($conn, "INSERT INTO comment (User_ID, Boardgame_ID, Comment_Text) VALUES ('$user_id', '$boardgame_id', '$comment_text')");
-    if ($insert_query) {
-        $message[] = "Sikeres hozzászólás!";
+        if ($comment_data && ($comment_data['User_ID'] == $_SESSION['user_id'] || (isset($_SESSION['admin']) && $_SESSION['admin'] == 1))) {
+            $delete_query = mysqli_query($conn, "DELETE FROM comment WHERE ID = '$comment_id'");
+
+            if ($delete_query) {
+                $message[] = "Hozzászólás törölve!";
+            } else {
+                $message[] = "Hiba történt a hozzászólás törlése közben: " . mysqli_error($conn);
+            }
+        } else {
+            $message[] = "Nem jogosult a hozzászólás törlésére.";
+        }
     } else {
-        $message[] = "Hiba történt a hozzászólás beküldése közben: " . mysqli_error($conn);
+        if (!isset($_SESSION['user_id'])) {
+            header("location: login.php");
+            exit;
+        }
+
+        $user_id = $_SESSION['user_id'];
+        $boardgame_id = $_POST['boardgame_id'];
+        $comment_text = mysqli_real_escape_string($conn, $_POST['comment_text']);
+
+        $insert_query = mysqli_query($conn, "INSERT INTO comment (User_ID, Boardgame_ID, Comment_Text) VALUES ('$user_id', '$boardgame_id', '$comment_text')");
+        if ($insert_query) {
+            $message[] = "Sikeres hozzászólás!";
+        } else {
+            $message[] = "Hiba történt a hozzászólás beküldése közben: " . mysqli_error($conn);
+        }
     }
 }
 ?>
@@ -98,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php endif; ?>
 </script>
 <div class="form-container">
-    <div class="bg-main" >
+    <div class="bg-main">
         <div id="boardgame-content">
             <h3><?php echo isset($boardgame_data['name']) ? $boardgame_data['name'] : 'Név nincs megadva'; ?></h3>
             <?php if (!empty($boardgame_data['image'])): ?>
@@ -120,8 +141,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php foreach ($comments as $comment): ?>
                     <li class="comment">
                         <div class="comment-line">
-                            <span class="comment-author"><?php echo $comment['author_name']; ?></span>
+                            <span class="comment-author">
+                                <?php echo $comment['author_name']; ?></span>
                             <span class="comment-date">Dátum: <?php echo $comment['Created_at']; ?></span>
+                            <?php if ($comment['User_ID'] == $_SESSION['user_id'] || (isset($_SESSION['admin']) && $_SESSION['admin'] == 1)): ?>
+                                <form action="" method="post" style="display:inline;" class="delete-comment-form">
+                                    <input type="hidden" name="comment_id" value="<?php echo $comment['ID']; ?>">
+                                    <button type="submit" name="delete_comment" class="delete-btn-small">Törlés</button>
+                                </form>
+                            <?php endif; ?>
                         </div>
                         <span class="comment-text"><?php echo $comment['Comment_Text']; ?></span>
                         <?php if ($comment['Edited']): ?>
