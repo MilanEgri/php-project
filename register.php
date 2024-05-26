@@ -99,7 +99,9 @@ if(isset($_POST['submit'])){
         <input type="password" name="password" placeholder="Jelszó" required class="box">
         <input type="password" name="confirmPassword" placeholder="Jelszó megerősítése" required class="box">
         <input type="file" name="image" accept="image/jpg, image/jpeg, image/png" class="box">
-        <div class="g-recaptcha" data-sitekey="6LcKQ8QpAAAAAPMchFOG-CtR_rnP06-HR57SW1Qe"></div>
+        <?php
+        echo "<div class=g-recaptcha data-sitekey=$recaptcha_public></div>";
+         ?>
         <input type="submit" name="submit" value="Regisztráció" class="btn">
         <p>Már van profilod? <a href="login.php">Belépés</a></p>
     </form>
