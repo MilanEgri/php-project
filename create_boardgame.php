@@ -90,7 +90,7 @@ if(isset($_POST['submit'])) {
         <input type="number" name="maxplayer" placeholder="Maximum Játékos" required class="box">
         <input type="text" name="playtime" placeholder="Játékidő" required class="box">
         <input type="file" name="image" accept="image/jpeg, image/png" required class="box">
-        <input type="submit" name="submit" value="Add Board Game" class="btn">
+        <input type="submit" name="submit" value="Társasjáték hozzáadása" class="btn">
     </form>
 </div>
 </body>

@@ -134,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <p><?php echo isset($boardgame_data['playtime']) ? $boardgame_data['playtime'] . " játékidő" : 'Nincs megadva játékidő.'; ?></p>
             </div>
         </div>
-        <button class="btn" onclick="downloadPDF()">Download as PDF</button>
+        <button class="btn" onclick="downloadPDF()">PDF Letöltése</button>
 
         <div class="comment-section">
             <ul>
@@ -144,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <span class="comment-author">
                                 <?php echo $comment['author_name']; ?></span>
                             <span class="comment-date">Dátum: <?php echo $comment['Created_at']; ?></span>
-                            <?php if ($comment['User_ID'] == $_SESSION['user_id'] || (isset($_SESSION['admin']) && $_SESSION['admin'] == 1)): ?>
+                            <?php if (isset($_SESSION['user_id']) && $comment['User_ID'] == $_SESSION['user_id'] || (isset($_SESSION['admin']) && $_SESSION['admin'] == 1)): ?>
                                 <form action="" method="post" style="display:inline;" class="delete-comment-form">
                                     <input type="hidden" name="comment_id" value="<?php echo $comment['ID']; ?>">
                                     <button type="submit" name="delete_comment" class="delete-btn-small">Törlés</button>
