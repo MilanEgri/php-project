@@ -49,6 +49,7 @@
 0. Szükséges programok:
     - MAMP,XAMP,LAMP VAGY PHP 8.1 és apache 2.0
     - PHP MySql
+    - Google cloud profil
     
 1. fájlok letöltése
 
@@ -56,4 +57,6 @@
 2. Php MySQL ben adatbázis létrehozása tetszőleges névvel
 3.  ```php-project.sql``` importálása a létrehozott adatbázisba
 4.  ```_config.php``` adatok kitöltése
+
+    !Fontos a console.cloud.google.com on be kell állítani a localhost domain nevet az oldalhoz tartozó profilhoz.
 5.  ```_config.php``` átnevezése ```config.php``` ra
