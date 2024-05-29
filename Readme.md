@@ -3,7 +3,7 @@
 ## Funkciók
 
 ### Regisztráció oldal
-    Regisztrálás a köcetkező adatokkal:
+    Regisztráció a következő adatokkal:
         - Felhasználónév (kötelező)
         - Email (kötelező)
         - Jelszó (kötelező)
@@ -17,30 +17,30 @@
             - Felhasználónév (kötelező)
             - Jelszó (kötelező)
 ### Admin rang
-    Regisztráció után MySQL ben az usernél az
-    admin taget át kell állítani 0 ról 1 re.
+    Regisztráció után MySQL-ben az felhasználónál az
+    admin taget át kell állítani 0-ról 1-re.
 ### Home oldal
-    Nem belépett és belépett usereknek
-        - Társasok listázva , társas nevére
+    Nem bejelentkezett és bejelentkezett felhasználóknak
+        - Társasjátékok listázva , társasjáték nevére
           kattintás esetén társas oldalára navigálás
-        - Oldal tetejés szűrő név alapján
-    Belépet Adminoknak
-        - Társasok melett szerzektés és törlés gomb
-        - Oldal tetjén társas hozzáadás gomb
-### Társas oldal
-    Nem belépett felhasználóknak
-        - Társasról összes adat és kép
-        - Előbbiek letöltése PDF be
-        - Commentek megtekintése
+        - Oldal tetején szűrő név alapján
+    Bejelentkezett adminoknak
+        - Társasjátékok mellett szerkesztésés törlés gomb
+        - Oldal tetején társasjáték hozzáadás gomb
+### Társasjáték oldal
+    Nem bejelentkezett felhasználóknak
+        - Társasjátékokról összes adat és kép
+        - Adatok letöltése PDF-be
+        - Kommentek megtekintése
     Belépett felhasználónak
-        - Comment írás és saját comment törlése
+        - Komment írás és saját komment törlése
     Belépett Adminoknak
-        - Összes comment törlése
-### Társasjáték léterhozása (csak adminoknak)
+        - Összes komment törlése
+### Társasjáték létrehozása(csak adminoknak)
     - Adatok és kép feltöltése társasról
 ### Társasjáték szerkeztése (csak adminok)
     - Összes adat és kép cserélhető
-### Profil szerkeztése (csak belépetteknek)
+### Profil szerkesztése (csak belépetteknek)
     - összes adat és profilkép cseréje
     - profil törlése
         
